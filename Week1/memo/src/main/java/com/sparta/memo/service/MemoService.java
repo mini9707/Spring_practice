@@ -37,7 +37,7 @@ public class MemoService {
     //사용자에게 메모 반환(보여주기)
     public List<MemoResponseDto> getMemos() {
         // DB 조회
-        return memoRepository.findAll().stream().map(MemoResponseDto::new).toList();
+        return memoRepository.findAllByOrderByModifiedAtDesc().stream().map(MemoResponseDto::new).toList();
     }
 
     //메모 수정
