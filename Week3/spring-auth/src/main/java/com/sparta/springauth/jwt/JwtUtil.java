@@ -22,18 +22,24 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    // Header KEY 값
+    // Header KEY 값 == COOKIE 의 NAME 값
     public static final String AUTHORIZATION_HEADER = "Authorization";
+
     // 사용자 권한 값의 KEY
     public static final String AUTHORIZATION_KEY = "auth";
-    // Token 식별자
+
+    // Token 식별자 == Bearer 이 앞에 붙어있으면 Token 으로 인식하는 규칙
     public static final String BEARER_PREFIX = "Bearer ";
+
     // 토큰 만료시간
     private final long TOKEN_TIME = 60 * 60 * 1000L; // 60분
 
     @Value("${jwt.secret.key}") // Base64 Encode 한 SecretKey
     private String secretKey;
+
+    //secretKey 를 담을 객체
     private Key key;
+
     private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
     // 로그 설정
@@ -45,7 +51,7 @@ public class JwtUtil {
         key = Keys.hmacShaKeyFor(bytes);
     }
 
-    // 토큰 생성
+    // JWT 토큰 생성
     public String createToken(String username, UserRoleEnum role) {
         Date date = new Date();
 
@@ -59,7 +65,7 @@ public class JwtUtil {
                         .compact();
     }
 
-    // JWT Cookie 에 저장
+    // 생성된 JWT Cookie 에 저장
     public void addJwtToCookie(String token, HttpServletResponse res) {
         try {
             token = URLEncoder.encode(token, "utf-8").replaceAll("\\+", "%20"); // Cookie Value 에는 공백이 불가능해서 encoding 진행
@@ -67,14 +73,14 @@ public class JwtUtil {
             Cookie cookie = new Cookie(AUTHORIZATION_HEADER, token); // Name-Value
             cookie.setPath("/");
 
-            // Response 객체에 Cookie 추가
+            // Response 객체에 Cookie 추 가
             res.addCookie(cookie);
         } catch (UnsupportedEncodingException e) {
             logger.error(e.getMessage());
         }
     }
 
-    // JWT 토큰 substring
+    // COOKIE 에 들어있던 JWT 토큰 substring
     public String substringToken(String tokenValue) {
         if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(BEARER_PREFIX)) {
             return tokenValue.substring(7);
@@ -83,7 +89,7 @@ public class JwtUtil {
         throw new NullPointerException("Not Found Token");
     }
 
-    // 토큰 검증
+    // JWT 토큰 검증
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -100,7 +106,7 @@ public class JwtUtil {
         return false;
     }
 
-    // 토큰에서 사용자 정보 가져오기
+    // JWT 토큰에서 사용자 정보 가져오기
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }

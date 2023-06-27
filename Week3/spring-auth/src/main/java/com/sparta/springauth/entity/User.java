@@ -1,6 +1,7 @@
 package com.sparta.springauth.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,6 +28,7 @@ public class User {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING) //enum 타입을 데이터베이스 컬럼에 저장할 때 사용
     private UserRoleEnum role;
+
 
     public User(String username, String password, String email, UserRoleEnum role) {
         this.username = username;
