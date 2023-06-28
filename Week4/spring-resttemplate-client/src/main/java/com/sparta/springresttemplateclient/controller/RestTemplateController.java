@@ -19,12 +19,12 @@ public class RestTemplateController {
         this.restTemplateService = restTemplateService;
     }
 
-    @GetMapping("/get-call-obj")
+    @GetMapping("/get-call-obj") // 원하는 아이템 1개 받아오기
     public ItemDto getCallObject(String query) {
         return restTemplateService.getCallObject(query);
     }
 
-    @GetMapping("/get-call-list")
+    @GetMapping("/get-call-list") // 전체 아이템 리스트 받아오기
     public List<ItemDto> getCallList() {
         return restTemplateService.getCallList();
     }
