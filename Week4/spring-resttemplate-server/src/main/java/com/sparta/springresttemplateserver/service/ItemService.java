@@ -19,12 +19,22 @@ public class ItemService {
             new Item("AirPods", 350_000)
     );
 
+    //클라이언트 요청 쿼리를 아이템 리스트와 비교해서 일치하는 아이템을 반환, 틀리면 null 반환
     public Item getCallObject(String query) {
+        for (Item item : itemList) {
+            if(item.getTitle().equals(query)) {
+                return item;
+            }
+        }
         return null;
     }
 
     public ItemResponseDto getCallList() {
-        return null;
+        ItemResponseDto responseDto = new ItemResponseDto();
+        for (Item item : itemList) {
+            responseDto.setItems(item);
+        }
+        return responseDto;
     }
 
     public Item postCall(String query, UserRequestDto requestDto) {
