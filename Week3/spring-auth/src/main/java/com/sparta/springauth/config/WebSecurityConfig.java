@@ -16,8 +16,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
+@Configuration // 빈을 수동 등록 할 때 필요, 싱글톤 유지 하기 위함!
 @EnableWebSecurity // Spring Security 지원을 가능하게 함
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
@@ -73,6 +74,12 @@ public class WebSecurityConfig {
         // 필터 관리 -> 필터에 어디에 넣을것인지 설정하는 부분 --> 필터를 등록하는 방법 !
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        //접근 불가 페이지
+        http.exceptionHandling((exceptionHandling) ->
+                exceptionHandling
+                        .accessDeniedPage("/forbidden.html")
+        );
 
         return http.build();
     }
