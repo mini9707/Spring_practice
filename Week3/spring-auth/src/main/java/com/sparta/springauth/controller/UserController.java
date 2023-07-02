@@ -35,15 +35,15 @@ public class UserController {
         return "redirect:/api/user/login-page";
     }
 
-    @PostMapping("/user/login")
-    public String login(LoginRequestDto requestDto, HttpServletResponse res) {
-        try {
-            userService.login(requestDto, res);
-        } catch (Exception e) {
-            return "redirect:/api/user/login-page?error";
-        }
-
-        return "redirect:/";
-    }
+//    @PostMapping("/user/login")               //필터에서 로그인 처리를 할것이기 때문에 분리 !
+//    public String login(LoginRequestDto requestDto, HttpServletResponse res) {
+//        try {
+//            userService.login(requestDto, res);
+//        } catch (Exception e) {
+//            return "redirect:/api/user/login-page?error";
+//        }
+//
+//        return "redirect:/";
+//    }
 
 }

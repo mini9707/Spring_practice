@@ -1,6 +1,6 @@
 package com.sparta.springauth.entity;
 
-public enum UserRoleEnum {
+public enum UserRoleEnum { // 사용자 권한 관련한 enum 클래스
     USER(Authority.USER),  // 사용자 권한
     ADMIN(Authority.ADMIN);  // 관리자 권한
 
