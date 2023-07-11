@@ -81,7 +81,7 @@ public class UserController {
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
         String token = kakaoService.kakaoLogin(code);
 
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token);
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7)); // token -> BEARER+공백한칸 이 붙어 있기 때문에 공백은 허용되지 않아서 SUBSTRING 안하면 오류 발생
         cookie.setPath("/");
         response.addCookie(cookie);
 

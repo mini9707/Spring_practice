@@ -18,7 +18,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Slf4j(topic = "JWT 검증 및 인가")
-public class JwtAuthorizationFilter extends OncePerRequestFilter {
+public class JwtAuthorizationFilter extends OncePerRequestFilter { //인가 필터
 
     private final JwtUtil jwtUtil;
     private final UserDetailsServiceImpl userDetailsService;
