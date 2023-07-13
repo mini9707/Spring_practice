@@ -23,7 +23,7 @@ public class FolderService {
             if (!isExistFolderName(folderName, existFolderList)) { // DB에 저장된 폴더 이름과 현재 사용자가 입력한 폴더이름을 비교 (중복 불가)
                 folderList.add(new Folder(folderName, user));
             } else {
-                throw new IllegalArgumentException("폴더명이 중복되었습니다.");
+                throw new IllegalArgumentException("중복된 폴더명을 제거해주세요. 폴더명 : " + folderName);
             }
         }
 
